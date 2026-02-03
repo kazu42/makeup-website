@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BLUSH & ROSE — Premium Pink Makeup</title>
+  <meta name="description" content="Discover curated pink makeup essentials. Blush palettes, pink lipsticks, glosses & more. Premium quality, cruelty-free cosmetics." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+    body {
+      background: linear-gradient(135deg, #fff5f7 0%, #ffe4ec 50%, #fce4ec 100%);
+      color: #333;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #fff0f5);
+      box-shadow: 0 8px 32px rgba(255, 105, 180, 0.1);
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(255, 105, 180, 0.15);
+    }
+
+    .product-image {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(135deg, #ffe4ec, #fff0f5);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+
+    .badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 10;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      color: white;
+      transition: all 0.3s ease;
+      border: none;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 12px 24px;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #ff69b4;
+      border: 2px solid #ff69b4;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      font-weight: 600;
+      padding: 10px 22px;
+    }
+
+    .btn-secondary:hover {
+      background: #fff0f5;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 40;
+      display: none;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .star {
+      color: #ffc107;
+      font-size: 14px;
+    }
+
+    .filter-tag {
+      background: white;
+      border: 1px solid #ddd;
+      color: #666;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .filter-tag.active {
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      color: white;
+      border-color: transparent;
+    }
+
+    .testimonial-card {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      border-left: 4px solid #ff69b4;
+    }
+
+    .navbar {
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-link {
+      position: relative;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar fixed top-0 left-0 right-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-400 to-pink-600 flex items-center justify-center">
+          <span class="text-white font-bold">BR</span>
+        </div>
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">BLUSH & ROSE</h1>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#shop" class="nav-link">Shop</a>
+        <a href="#best-sellers" class="nav-link">Best Sellers</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <div class="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg border border-pink-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-pink-600" viewBox="0 0 20 20" fill="currentColor"><path d="M8 16a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M12.9 12.9a8 8 0 10-11.313-11.313m1.415 1.415a6 6 0 018.485 8.485"/></svg>
+          <input type="text" placeholder="Search..." class="outline-none bg-transparent text-sm w-32" />
+        </div>
+        <button id="cartBtn" class="relative p-2 hover:bg-pink-50 rounded-lg transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-pink-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+          <div id="cartCount" class="cart-badge hidden">0</div>
+        </button>
+        <button id="mobileMenuToggle" class="md:hidden p-2 hover:bg-pink-50 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-pink-200">
+      <div class="px-4 py-4 space-y-3">
+        <a href="#home" class="block text-gray-700 py-2">Home</a>
+        <a href="#shop" class="block text-gray-700 py-2">Shop</a>
+        <a href="#best-sellers" class="block text-gray-700 py-2">Best Sellers</a>
+        <a href="#about" class="block text-gray-700 py-2">About</a>
+        <a href="#contact" class="block text-gray-700 py-2">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero-section pt-24 pb-16 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center py-12">
+        <div class="fade-in">
+          <span class="text-pink-600 text-sm font-semibold tracking-widest uppercase">New Collection</span>
+          <h2 class="text-5xl lg:text-6xl font-bold text-gray-900 mt-4 leading-tight">
+            Embrace Your <span class="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">Pink Side</span>
+          </h2>
+          <p class="text-gray-700 text-lg mt-6 max-w-lg">
+            Discover our curated collection of premium pink makeup essentials. From rosy blushes to luscious lipsticks—all cruelty-free and vegan-friendly.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 mt-8">
+            <a href="#shop" class="btn-primary text-center">Shop Now</a>
+            <button class="btn-secondary text-center">Learn More</button>
+          </div>
+        </div>
+        <div class="relative h-96 lg:h-[500px]">
+          <div class="absolute inset-0 bg-gradient-to-br from-pink-200 to-rose-300 rounded-2xl overflow-hidden">
+            <img src="591167034_18436743967103532_877924938279548379_n.jpg" alt="Pink makeup collection" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS & PRODUCTS -->
+  <section id="shop" class="py-20 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Shop Our Collection</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Handpicked pink makeup products to enhance your natural beauty.
+        </p>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap justify-center gap-3 mb-12">
+        <button class="filter-tag active" data-filter="all">All Products</button>
+        <button class="filter-tag" data-filter="blush">Blush</button>
+        <button class="filter-tag" data-filter="lipstick">Lipstick</button>
+        <button class="filter-tag" data-filter="eyeshadow">Eyeshadow</button>
+        <button class="filter-tag" data-filter="foundation">Foundation</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Products will be inserted here by JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- BEST SELLERS -->
+  <section id="best-sellers" class="bg-white py-20 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Customer Favorites</h2>
+        <p class="text-gray-600">Our most loved pink makeup products</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="619388030_18012453938818419_7588244213573742146_n.jpg" alt="Rose Blush Palette">
+            <div class="badge">Best Seller</div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900">Rose Blush Palette</h3>
+            <div class="flex items-center gap-1 my-2">
+              <span class="star">★★★★★</span>
+              <span class="text-sm text-gray-500">(328 reviews)</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-4">12 shade blush palette with micro-pearls for a luminous finish.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl font-bold text-gray-900">$45.00</span>
+              <button class="btn-primary add-to-cart" data-product="Rose Blush Palette" data-price="45">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="product-image">
+            <img src="623388974_18091269713489710_3365486532162461904_n.jpg" alt="Velvet Lip Stick">
+            <div class="badge">Limited</div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900">Velvet Lip Stick</h3>
+            <div class="flex items-center gap-1 my-2">
+              <span class="star">★★★★★</span>
+              <span class="text-sm text-gray-500">(412 reviews)</span>
+            </div>
+            <p class="text-gray-600 text-sm mb-4">Rich, velvety finish lipstick in 8 gorgeous pink shades.</p>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl font-bold text-gray-900">$28.00</span>
+              <button class="btn-primary add-to-cart" data-product="Velvet Lip Stick" data-price="28">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="about" class="py-20 px-4 sm:px-6 bg-gradient-to-b from-white to-pink-50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Loved by Thousands</h2>
+        <p class="text-gray-600">Real reviews from real customers</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="testimonial-card">
+          <div class="flex gap-1 mb-3">
+            <span class="star">★★★★★</span>
+          </div>
+          <p class="text-gray-700 mb-4">"The blush palettes are absolutely gorgeous! The colors are so blendable and long-lasting. I've recommended this brand to all my friends."</p>
+          <div class="font-semibold text-gray-900">— Sarah M.</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="flex gap-1 mb-3">
+            <span class="star">★★★★★</span>
+          </div>
+          <p class="text-gray-700 mb-4">"Finally found the perfect pink lipstick! It's not drying, applies smoothly, and the color is just *chef's kiss*. Worth every penny!"</p>
+          <div class="font-semibold text-gray-900">— Emma L.</div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="flex gap-1 mb-3">
+            <span class="star">★★★★★</span>
+          </div>
+          <p class="text-gray-700 mb-4">"The cruelty-free and vegan claim is legit. My sensitive skin loves these products. Customer service is also amazing!"</p>
+          <div class="font-semibold text-gray-900">— Jessica R.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="bg-gradient-to-r from-pink-500 to-rose-500 py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto text-center text-white">
+      <h2 class="text-4xl font-bold mb-4">Subscribe for Exclusive Offers</h2>
+      <p class="text-lg mb-8 opacity-90">Get 15% off your first order + early access to new collections.</p>
+      <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input type="email" placeholder="Your email" class="flex-1 px-4 py-3 rounded-lg outline-none text-gray-900" />
+        <button class="bg-white text-pink-600 font-semibold px-6 py-3 rounded-lg hover:bg-gray-100 transition">Subscribe</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact" class="bg-gray-900 text-gray-300 py-16 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h3 class="font-bold text-white mb-4">BLUSH & ROSE</h3>
+          <p class="text-sm mb-4">Premium, cruelty-free pink makeup for every skin tone.</p>
+          <div class="flex gap-3">
+            <a href="#" class="w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center hover:bg-pink-700">f</a>
+            <a href="#" class="w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center hover:bg-pink-700">i</a>
+            <a href="#" class="w-8 h-8 rounded-full bg-pink-600 flex items-center justify-center hover:bg-pink-700">t</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-white mb-4">Shop</h4>
+          <ul class="text-sm space-y-2">
+            <li><a href="#" class="hover:text-white">Blush</a></li>
+            <li><a href="#" class="hover:text-white">Lipstick</a></li>
+            <li><a href="#" class="hover:text-white">Eyeshadow</a></li>
+            <li><a href="#" class="hover:text-white">Sets</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-white mb-4">Support</h4>
+          <ul class="text-sm space-y-2">
+            <li><a href="#" class="hover:text-white">Contact Us</a></li>
+            <li><a href="#" class="hover:text-white">Shipping Info</a></li>
+            <li><a href="#" class="hover:text-white">Returns</a></li>
+            <li><a href="#" class="hover:text-white">FAQ</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-semibold text-white mb-4">Legal</h4>
+          <ul class="text-sm space-y-2">
+            <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-white">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-700 pt-8 text-center text-sm">
+        <p>&copy; 2026 Blush & Rose. All rights reserved. | Cruelty-Free & Vegan</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CART MODAL -->
+  <div id="cartModal" class="modal-backdrop">
+    <div class="modal">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold text-gray-900">Shopping Cart</h3>
+        <button id="closeCart" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+      </div>
+
+      <div id="cartItems" class="mb-6 max-h-80 overflow-y-auto">
+        <!-- Cart items will be inserted here -->
+      </div>
+
+      <div class="border-t border-gray-200 pt-6 mb-6">
+        <div class="flex justify-between mb-2">
+          <span class="text-gray-600">Subtotal:</span>
+          <span class="font-semibold" id="subtotal">$0.00</span>
+        </div>
+        <div class="flex justify-between mb-4">
+          <span class="text-gray-600">Shipping:</span>
+          <span class="font-semibold" id="shipping">Free</span>
+        </div>
+        <div class="flex justify-between text-xl font-bold">
+          <span>Total:</span>
+          <span id="total">$0.00</span>
+        </div>
+      </div>
+
+      <button class="btn-primary w-full mb-3">Checkout</button>
+      <button id="continueShopping" class="btn-secondary w-full">Continue Shopping</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
